@@ -5,16 +5,21 @@
 
     <groupId>com.justin</groupId>
     <artifactId>back-end</artifactId>
-    <version>1.0</version>
+    <version>0.1.0</version>
     <name>back-end</name>
     <description>back-end</description>
     <packaging>pom</packaging>
 
     <modules>
-        <module>learning</module>
+        <module>back-end-tool</module>
+        <module>back-end-common</module>
+        <module>back-end-practice</module>
     </modules>
 
     <properties>
+        <back-end-tool.version>0.1.0</back-end-tool.version>
+        <back-end-common.version>0.1.0</back-end-common.version>
+        <back-end-practice.version>0.1.0</back-end-practice.version>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,14 +35,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.justin</groupId>
+                <artifactId>back-end-common</artifactId>
+                <version>${back-end-common.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

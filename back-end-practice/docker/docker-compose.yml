@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  all:
+    image: fullstack-backend-practice:0.1.0
+    build:
+      context: ../../
+      dockerfile: back-end-practice/docker/Dockerfile
+    ports:
+      - 8081:8081

@@ -19,8 +19,8 @@ RUN ./mvnw -pl back-end-common -am dependency:go-offline
 COPY back-end-common back-end-common
 RUN ./mvnw -pl back-end-common install
 
-RUN ./mvnw -pl back-end-practice -am dependency:go-offline
-COPY back-end-practice back-end-practice
-RUN ./mvnw -pl back-end-common,back-end-practice package
+RUN ./mvnw -pl back-end-tool -am dependency:go-offline
+COPY back-end-tool back-end-tool
+RUN ./mvnw -pl back-end-common,back-end-tool package
 
-CMD ["java", "-jar", "back-end-practice/target/back-end-practice.jar"]
+CMD ["java", "-jar", "back-end-tool/target/back-end-tool.jar"]

@@ -16,6 +16,6 @@ public class TestController {
 
   @RequestMapping("/")
   public Integer test() {
-    return NumberUtil.test();
+    return NumberUtil.test() + 2;
   }
 }

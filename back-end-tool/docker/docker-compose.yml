@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  all:
+    image: fullstack-backend-tool:0.1.0
+    build:
+      context: ../../
+      dockerfile: back-end-tool/docker/Dockerfile
+    ports:
+      - 8080:8080

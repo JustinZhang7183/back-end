@@ -12,6 +12,6 @@ public class NumberUtil {
   }
 
   public static Integer test() {
-    return 2;
+    return 4;
   }
 }

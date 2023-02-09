@@ -25,7 +25,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ../../
+          context: .
           file: back-end-practice/docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-backend-practice:latest

@@ -2,7 +2,7 @@ FROM eclipse-temurin:18-jdk
 
 WORKDIR /app
 
-COPY .mvn/ .mvn
+COPY .mvn .mvn
 COPY mvnw mvnw
 COPY pom.xml pom.xml
 COPY back-end-common/pom.xml back-end-common/pom.xml

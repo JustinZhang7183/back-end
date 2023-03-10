@@ -29,3 +29,9 @@ jobs:
           file: back-end-practice/docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-backend-practice:latest
+  deployment:
+    runs-on: self-hosted
+    steps:
+      - 
+        name: deploy in k8s
+        run: kubectl apply -f k8s/back-end-practice.yml

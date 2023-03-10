@@ -31,6 +31,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-backend-practice:latest
   deployment:
     runs-on: self-hosted
+    needs: build
     steps:
       -
         name: Checkout
@@ -38,4 +39,6 @@ jobs:
       - 
         name: deploy in k8s
         working-directory: .
-        run: kubectl apply -f k8s/back-end-practice.yml
+        run: |
+          kubectl delete -f k8s/back-end-practice.yml
+          kubectl apply -f k8s/back-end-practice.yml

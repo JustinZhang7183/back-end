@@ -22,13 +22,21 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
-        name: Build and push
+        name: Build and push practice module
         uses: docker/build-push-action@v3
         with:
           context: .
           file: back-end-practice/docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-backend-practice:latest
+      -
+        name: Build and push tool module
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: back-end-tool/docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/fullstack-backend-tool:latest
   deployment:
     runs-on: self-hosted
     needs: build
@@ -37,8 +45,14 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       - 
-        name: deploy in k8s
+        name: deploy practice module in k8s
         working-directory: .
         run: |
           kubectl delete -f k8s/back-end-practice.yml
           kubectl apply -f k8s/back-end-practice.yml
+      -
+        name: deploy tool module in k8s
+        working-directory: .
+        run: |
+          kubectl delete -f k8s/back-end-tool.yml
+          kubectl apply -f k8s/back-end-tool.yml

@@ -13,7 +13,8 @@
     <modules>
         <module>back-end-tool</module>
         <module>back-end-common</module>
-        <module>back-end-practice</module>
+        <module>back-end-authorization-server</module>
+        <module>back-end-resource-server</module>
     </modules>
 
     <properties>
@@ -23,7 +24,13 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot-dependencies.version>3.0.2</spring-boot-dependencies.version>
+<!--        <spring-boot.version>2.7.0</spring-boot.version>-->
+<!--        <spring-cloud.version>2021.0.3</spring-cloud.version>-->
+        <spring-boot.version>3.0.5</spring-boot.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>
+        <spring-security-oauth2-authorization-server.version>1.0.1</spring-security-oauth2-authorization-server.version>
+        <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -31,9 +38,26 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot-dependencies.version}</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-security-oauth2-authorization-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-jave.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.justin</groupId>
@@ -43,4 +67,23 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>18</source>
+                    <target>18</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

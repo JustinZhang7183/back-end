@@ -46,7 +46,7 @@ public class SecurityConfig {
   public UserDetailsService userDetailsService() {
     var user = User.withUsername("justin")
         .password("123")
-        .authorities("read")
+        .authorities("test")
         .build();
     return new InMemoryUserDetailsManager(user);
   }

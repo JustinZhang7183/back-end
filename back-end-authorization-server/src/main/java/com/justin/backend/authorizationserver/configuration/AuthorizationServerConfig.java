@@ -45,7 +45,9 @@ public class AuthorizationServerConfig {
   @Order(1)
   public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class).oidc(Customizer.withDefaults());
+    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+        .authorizationServerSettings(authorizationServerSettings())
+        .oidc(Customizer.withDefaults());
     http.exceptionHandling(e -> e
         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
     corsCustomer.corsCustomizer(http);
@@ -62,21 +64,32 @@ public class AuthorizationServerConfig {
     RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
         .clientId("client")
         .clientSecret("secret")
-        .scope(OidcScopes.OPENID) // TODO: What's difference?
+        .scope(OidcScopes.OPENID) // different scope correspond different scenario. if it is openid, need to use id_token instead access_token when call api.
         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-        .redirectUri("http://127.0.0.1:3000/authorized") // TODO: why can't use localhost
+        .redirectUri("http://127.0.0.1:3000/authorized")// we can't use localhost, see OAuth2AuthorizationCodeRequestAuthenticationValidator
         .clientSettings(clientSettings())
+        .tokenSettings(tokenSettings())
         .build();
     return new InMemoryRegisteredClientRepository(registeredClient);
   }
 
+  /**
+   * authorization server settings, like some endpoints.
+   *
+   * @return AuthorizationServerSettings
+   */
   @Bean
   public AuthorizationServerSettings authorizationServerSettings() {
-    return AuthorizationServerSettings.builder().build(); // TODO: Is it needed?
+    return AuthorizationServerSettings.builder().build();
   }
 
+  /**
+   * token settings.
+   *
+   * @return TokenSettings.
+   */
   @Bean
   public TokenSettings tokenSettings() {
     return TokenSettings.builder()
@@ -85,11 +98,16 @@ public class AuthorizationServerConfig {
         .build();
   }
 
+  /**
+   * client settings
+   *
+   * @return ClientSettings.
+   */
   @Bean
   public ClientSettings clientSettings() {
     return ClientSettings.builder()
-        .requireAuthorizationConsent(true) // TODO: difference?
-        .requireProofKey(true) // need PKCE
+        .requireAuthorizationConsent(false) // TODO: what is its usage?
+        .requireProofKey(true) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
         .build();
   }
 

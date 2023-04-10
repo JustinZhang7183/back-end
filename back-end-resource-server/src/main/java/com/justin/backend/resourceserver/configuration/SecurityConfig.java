@@ -1,13 +1,13 @@
 package com.justin.backend.resourceserver.configuration;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
 public class SecurityConfig {
@@ -18,12 +18,16 @@ public class SecurityConfig {
   private String issuerUri;
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
     corsCustomer.corsCustomizer(http);
-    return http
-        .authorizeHttpRequests(customizer -> customizer.anyRequest().authenticated())
+    http.authorizeExchange(exchange -> exchange.anyExchange().authenticated())
         .oauth2ResourceServer(customizer -> customizer
-            .jwt(jwtCustomizer -> jwtCustomizer.decoder(JwtDecoders.fromIssuerLocation(issuerUri))))
-        .build();
+            .jwt(jwtCustomizer -> jwtCustomizer.jwtDecoder(jwtDecoder())));
+    return http.build();
+  }
+
+  @Bean
+  public ReactiveJwtDecoder jwtDecoder() {
+    return ReactiveJwtDecoders.fromIssuerLocation(issuerUri);
   }
 }

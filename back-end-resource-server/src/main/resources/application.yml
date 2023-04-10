@@ -9,8 +9,19 @@ logging:
           oauth2: trace
 
 spring:
+  application:
+    name: resource-server-gateway
+  profiles:
+    active: local
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8000
+  cloud:
+    gateway:
+      routes:
+        - id: tool-server
+          uri: lb://tool-server
+          predicates:
+            - Path=/tool/**

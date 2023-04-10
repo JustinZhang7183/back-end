@@ -1,15 +1,15 @@
 package com.justin.backend.resourceserver.configuration;
 
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 
 import java.util.List;
 
 @Component
 public class CORSCustomer {
-  public void corsCustomizer(HttpSecurity http) throws Exception {
+  public void corsCustomizer(ServerHttpSecurity http) {
     http.cors(c -> {
       CorsConfigurationSource source = s -> {
         CorsConfiguration cc = new CorsConfiguration();

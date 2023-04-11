@@ -1,8 +1,10 @@
 package com.justin.backend.springsecuritydemo.configuration;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,7 +67,7 @@ public class SecurityConfiguration {
   /**
    * custom data source, need provide the schema.sql
    */
-  @Bean
+//  @Bean
   public DataSource customMemoryH2DataSource() {
     return DataSourceBuilder.create()
             .driverClassName("org.h2.Driver")
@@ -73,6 +75,12 @@ public class SecurityConfiguration {
             .username("sa")
             .password("")
             .build();
+  }
+
+  @Bean
+  @ConfigurationProperties(prefix = "spring.datasource.hikari")
+  public DataSource customMysqlDataSource() {
+    return DataSourceBuilder.create().build();
   }
 
   @Bean

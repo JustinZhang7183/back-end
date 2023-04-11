@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    hikari:
+      username: xxx
+      password: xxx
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://ip:3306/spring_security_demo

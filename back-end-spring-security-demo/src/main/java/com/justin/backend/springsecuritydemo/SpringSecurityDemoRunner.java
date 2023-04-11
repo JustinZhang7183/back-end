@@ -15,7 +15,7 @@ public class SpringSecurityDemoRunner {
         SpringApplication.run(SpringSecurityDemoRunner.class, args);
     }
 
-    @Bean
+//    @Bean
     CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
         return args -> {
             var admin = User.builder()

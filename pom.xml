@@ -15,6 +15,7 @@
         <module>back-end-common</module>
         <module>back-end-authorization-server</module>
         <module>back-end-resource-server</module>
+        <module>back-end-spring-security-demo</module>
     </modules>
 
     <properties>

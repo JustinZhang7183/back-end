@@ -3,11 +3,6 @@ spring:
     name: spring-security-demo
   profiles:
     active: local
-  security:
-    user:
-      name: justin
-      password: 123
-      roles: USER
 
 server:
   port: 8080

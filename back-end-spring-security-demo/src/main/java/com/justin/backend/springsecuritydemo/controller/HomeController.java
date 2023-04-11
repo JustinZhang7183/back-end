@@ -18,6 +18,6 @@ public class HomeController {
 
     @RequestMapping("/admin")
     public String admin(Authentication authentication) {
-        return "Welcome " + authentication.getName() + "!";
+        return "Welcome " + authentication.getName() + "! Your authorities: " + authentication.getAuthorities();
     }
 }

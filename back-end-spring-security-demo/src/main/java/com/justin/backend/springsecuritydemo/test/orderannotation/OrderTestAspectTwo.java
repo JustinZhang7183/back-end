@@ -1,4 +1,4 @@
-package com.justin.backend.springsecuritydemo.configuration;
+package com.justin.backend.springsecuritydemo.test.orderannotation;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;

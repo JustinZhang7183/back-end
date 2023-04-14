@@ -34,3 +34,4 @@ build/
 
 ### local config ###
 /**/application-local.yml
+/**/application-local-common.yml

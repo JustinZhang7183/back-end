@@ -3,9 +3,3 @@ server:
 spring:
   application:
     name: back-end-auth
-#  datasource:
-#    hikari:
-#      username: root
-#      password: www123321
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      jdbc-url: jdbc:mysql://localhost:3306/back_end_auth

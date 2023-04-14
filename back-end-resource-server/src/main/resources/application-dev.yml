@@ -1,5 +1,23 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8000
   cloud:
-    nacos:
-      discovery:
-        server-addr: http://ip:8848
+    gateway:
+      routes:
+        - id: tool-server
+          uri: lb://tool-server
+          predicates:
+            - Path=/tool/**
+
+server:
+  port: 9000
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          oauth2: trace

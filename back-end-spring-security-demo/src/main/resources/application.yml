@@ -2,26 +2,5 @@ spring:
   application:
     name: spring-security-demo
   profiles:
-    active: local
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    # for embedded database
-    generate-unique-name: false
-  sql:
-    init:
-      # not applicable for realistic situation, so never
-      mode: never
-      schema-locations: classpath:schema-mysql.sql
-      data-locations: classpath:data-mysql.sql
-server:
-  port: 8080
-
-logging:
-  level:
-    org:
-      springframework:
-        security: INFO
-        jdbc: INFO
+    active: dev
+    include: local-common

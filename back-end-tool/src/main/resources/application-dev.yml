@@ -1,5 +1,10 @@
 spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: http://ip:8848
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+server:
+  port: 8082
+  servlet:
+    context-path: /tool

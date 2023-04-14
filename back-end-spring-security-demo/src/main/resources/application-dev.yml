@@ -1,7 +1,29 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   datasource:
+    # for embedded database
+    generate-unique-name: false
     hikari:
-      username: xxx
-      password: xxx
+      username: root
+      password: ${mysql-password}
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://ip:3306/spring_security_demo
+      jdbc-url: jdbc:mysql://${ip}:3306/spring_security_demo
+  sql:
+    init:
+      # not applicable for realistic situation, so never
+      mode: never
+      schema-locations: classpath:schema-mysql.sql
+      data-locations: classpath:data-mysql.sql
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      springframework:
+        security: INFO
+        jdbc: INFO

@@ -2,12 +2,6 @@ spring:
   application:
     name: tool-server
   profiles:
-    active: local
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 100MB
-server:
-  port: 8082
-  servlet:
-    context-path: /tool
+    active: dev,dev-nacos
+    include: local-common
+

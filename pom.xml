@@ -78,6 +78,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.justin</groupId>
+            <artifactId>back-end-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

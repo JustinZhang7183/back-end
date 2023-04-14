@@ -45,7 +45,7 @@ public class SecurityConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     var user = User.withUsername("justin")
-        .password("123")
+        .password("justin")
         .authorities("test")
         .build();
     return new InMemoryUserDetailsManager(user);

@@ -37,14 +37,18 @@ public class SecurityConfiguration {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(customizer ->
         customizer.requestMatchers("/").permitAll()
-            .requestMatchers("/user").hasRole("USER")
+            .requestMatchers("/user")
+            // for google login and need vm proxy options: -Dhttps.proxyHost=127.0.0.1 -Dhttps.proxyPort=10809
+            .hasAnyAuthority("ROLE_USER", "OIDC_USER") //
+//            .hasRole("USER")
             .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated())
         .csrf().disable() // for h2-console
         .headers().frameOptions().disable() // for h2-console
         .and()
         .formLogin(Customizer.withDefaults()) // login with browser and Form
-        .httpBasic(Customizer.withDefaults()); // login with Insomnia/Postman and Basic Auth
+        .httpBasic(Customizer.withDefaults()) // login with Insomnia/Postman and Basic Auth
+        .oauth2Login(Customizer.withDefaults()); // Login with Google - GitHub - Facebook or ...
     return http.build();
   }
 

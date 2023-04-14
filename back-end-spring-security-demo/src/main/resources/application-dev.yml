@@ -1,32 +1,10 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
   datasource:
-    # for embedded database
-    generate-unique-name: false
     hikari:
       username: root
       password: ${mysql-password}
       driver-class-name: com.mysql.cj.jdbc.Driver
       jdbc-url: jdbc:mysql://${ip}:3306/spring_security_demo
-  sql:
-    init:
-      # not applicable for realistic situation, so never
-      mode: never
-      schema-locations: classpath:schema-mysql.sql
-      data-locations: classpath:data-mysql.sql
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${google-client-id}
-            client-secret: ${google-client-secret}
-          github:
-            client-id: xxx
-            client-secret: xxx
 
 server:
   port: 8080

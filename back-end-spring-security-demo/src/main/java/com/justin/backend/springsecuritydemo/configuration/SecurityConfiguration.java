@@ -1,86 +1,55 @@
 package com.justin.backend.springsecuritydemo.configuration;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
+import com.justin.backend.springsecuritydemo.service.MyUserDetailsService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
 
 /**
  * security config class.
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
+@AllArgsConstructor
 public class SecurityConfiguration {
+  private final MyUserDetailsService userDetailsService;
 
   /**
-   * custom security filter chain for user path.
+   * custom security filter chain.
    */
   @Bean
-  @Order(100)
   public SecurityFilterChain securityFilterChainForUser(HttpSecurity http) throws Exception {
-    http.securityMatcher("/user")
-        .authorizeHttpRequests(authConfig ->
-            authConfig.requestMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-                .anyRequest().authenticated())
-        .formLogin(Customizer.withDefaults());
-    return http.build();
-  }
-
-  /**
-   * custom security filter chain for admin path.
-   */
-  @Bean
-  @Order(101)
-  public SecurityFilterChain securityFilterChainForAdmin(HttpSecurity http) throws Exception {
-    http.securityMatcher("/admin")
-        .authorizeHttpRequests(authConfig ->
-            authConfig.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
-                .anyRequest().authenticated())
-        .formLogin(Customizer.withDefaults());
-    return http.build();
-  }
-
-  /**
-   * custom security filter chain for home path.
-   */
-  @Bean
-  @Order(102)
-  public SecurityFilterChain securityFilterChainForHome(HttpSecurity http) throws Exception {
-    http.securityMatcher("/")
-        .authorizeHttpRequests(authConfig ->
-            authConfig.anyRequest().permitAll())
-        .formLogin(Customizer.withDefaults());
-    return http.build();
-  }
-
-  /**
-   * custom security filter chain for other path.
-   */
-  @Bean
-  @Order(103)
-  public SecurityFilterChain securityFilterChainForOther(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(authConfig ->
-            authConfig.anyRequest().denyAll())
-        .formLogin(Customizer.withDefaults());
+            authConfig.requestMatchers(HttpMethod.GET, "/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                .requestMatchers(HttpMethod.POST, "/authority").permitAll()
+                .anyRequest().authenticated())
+        .csrf().disable() // just set for post request temporarily
+        .userDetailsService(userDetailsService)
+        .formLogin(Customizer.withDefaults())
+        .httpBasic(Customizer.withDefaults());
     return http.build();
   }
 
   @Bean
-  @ConfigurationProperties(prefix = "spring.datasource.hikari")
-  public DataSource customMysqlDataSource() {
-    return DataSourceBuilder.create().build();
+  public ApplicationListener<AuthenticationSuccessEvent> successEvent() {
+    return event -> log.info("Success Login " + event.getAuthentication().getClass().getName() + " - " + event.getAuthentication().getName());
   }
 
   @Bean
-  public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
-    return new JdbcUserDetailsManager(dataSource);
+  public ApplicationListener<AuthenticationFailureBadCredentialsEvent> failureEvent() {
+    return event -> log.info("Bad Credentials Login " + event.getAuthentication().getClass().getName() + " - " + event.getAuthentication().getName());
   }
 }

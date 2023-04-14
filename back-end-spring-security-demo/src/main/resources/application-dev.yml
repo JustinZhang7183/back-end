@@ -1,10 +1,19 @@
 spring:
   datasource:
-    hikari:
-      username: root
-      password: ${mysql-password}
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://${ip}:3306/spring_security_demo
+    username: root
+    password: ${mysql-password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ip}:3306/spring_security_demo
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
 
 server:
   port: 8080
@@ -15,3 +24,4 @@ logging:
       springframework:
         security: INFO
         jdbc: INFO
+        jpa: TRACE

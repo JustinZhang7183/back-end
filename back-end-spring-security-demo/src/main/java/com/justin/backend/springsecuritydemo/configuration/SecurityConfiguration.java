@@ -13,6 +13,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * security config class.
@@ -38,6 +39,7 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated())
         .csrf().disable() // just set for post request temporarily
         .userDetailsService(userDetailsService)
+        .addFilterBefore(new PreLoginSecurityFilter(), UsernamePasswordAuthenticationFilter.class)
         .formLogin(Customizer.withDefaults())
         .httpBasic(Customizer.withDefaults());
     return http.build();

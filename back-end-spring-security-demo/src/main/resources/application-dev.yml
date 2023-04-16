@@ -11,7 +11,7 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     generate-ddl: true
     show-sql: true
 
@@ -22,6 +22,6 @@ logging:
   level:
     org:
       springframework:
-        security: INFO
+        security: TRACE
         jdbc: INFO
-        jpa: TRACE
+        jpa: INFO

@@ -6,15 +6,12 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -42,7 +39,6 @@ public class AuthorizationServerConfig {
    * @throws Exception exception
    */
   @Bean
-  @Order(1)
   public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
     http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
@@ -64,7 +60,7 @@ public class AuthorizationServerConfig {
     RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
         .clientId("client")
         .clientSecret("secret")
-        .scope(OidcScopes.OPENID) // different scope correspond different scenario. if it is openid, need to use id_token instead access_token when call api.
+        .scope("read") // TODO: what difference between difference scope?
         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -107,7 +103,7 @@ public class AuthorizationServerConfig {
   public ClientSettings clientSettings() {
     return ClientSettings.builder()
         .requireAuthorizationConsent(false) // TODO: what is its usage?
-        .requireProofKey(true) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
+        .requireProofKey(false) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
         .build();
   }
 

@@ -3,10 +3,11 @@ package com.justin.backend.springsecuritydemo.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Data
-@Builder
+//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -23,22 +24,33 @@ public class CustomUsers {
   @NonNull
   private String password;
 
-  @Singular
+  private String firstName;
+
+  private String lastName;
+
+  @Transient
+  private String fullName;
+
+  private String emailAddress;
+
+  private LocalDate birthDate;
+
+//  @Singular
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
   @JoinTable(name = "custom_users_authorities", joinColumns = {
       @JoinColumn(name = "users_id", referencedColumnName = "id")},inverseJoinColumns = {
           @JoinColumn(name = "authorities_id", referencedColumnName = "id")})
   private Set<CustomAuthorities> authorities;
 
-  @Builder.Default
+//  @Builder.Default
   private Boolean accountNonExpired = true;
 
-  @Builder.Default
+//  @Builder.Default
   private Boolean accountNonLocked = true;
 
-  @Builder.Default
+//  @Builder.Default
   private Boolean credentialsNonExpired = true;
 
-  @Builder.Default
+//  @Builder.Default
   private Boolean enabled = true;
 }

@@ -1,5 +1,6 @@
 package com.justin.backend.springsecuritydemo.service;
 
+import com.justin.backend.springsecuritydemo.configuration.SecurityUser;
 import com.justin.backend.springsecuritydemo.model.CustomAuthorities;
 import com.justin.backend.springsecuritydemo.model.CustomUsers;
 import com.justin.backend.springsecuritydemo.repository.CustomAuthoritiesRepository;
@@ -45,12 +46,17 @@ public class MyUserDetailsService implements UserDetailsService {
     user.getAuthorities().stream().forEach(authority ->
         grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority())));
 
-    return User.builder()
-        .username(user.getUsername())
-        .password(user.getPassword())
-        .authorities(grantedAuthorities)
-        .disabled(!user.getEnabled())
-        .build();
+    return new SecurityUser(user.getUsername(),
+        user.getPassword(),
+        true,
+        true,
+        true,
+        true,
+        grantedAuthorities,
+        user.getFirstName(),
+        user.getLastName(),
+        user.getEmailAddress(),
+        user.getBirthDate());
   }
 
   public void createUser(CustomUsers user) {

@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,6 +20,13 @@ public class PreLoginSecurityFilter extends OncePerRequestFilter {
 
   private final String HEADER_PASSWORD = "x-filter-password";
 
+  private final AuthenticationManager authenticationManager;
+
+  public PreLoginSecurityFilter(AuthenticationManager authenticationManager) {
+    this.authenticationManager = authenticationManager;
+  }
+
+
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     log.info("before pre login filter");
@@ -30,19 +37,17 @@ public class PreLoginSecurityFilter extends OncePerRequestFilter {
     }
     var username = request.getHeader(HEADER_USER_NAME);
     var password = request.getHeader(HEADER_PASSWORD);
-    if (!"admin".equals(password)) {
-      log.info("wrong password");
+    CustomAuthentication authRequest = CustomAuthentication.unauthenticated(username, password);
+    try {
+      Authentication authenticate = authenticationManager.authenticate(authRequest);
+      var context = SecurityContextHolder.createEmptyContext();
+      context.setAuthentication(authenticate);
+      SecurityContextHolder.setContext(context);
+      filterChain.doFilter(request, response);
+    } catch (AuthenticationException e) {
       response.setStatus(HttpStatus.FORBIDDEN.value());
       response.getWriter().println("your password is wrong!");
-      return;
     }
-    SecurityContext context = SecurityContextHolder.createEmptyContext();
-    SecurityUser securityUser = new SecurityUser(username, password, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
-    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(securityUser,
-        null, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
-    context.setAuthentication(authToken);
-    SecurityContextHolder.setContext(context);
-    filterChain.doFilter(request, response);
     log.info("after pre login filter");
   }
 }

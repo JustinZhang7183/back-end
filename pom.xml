@@ -16,6 +16,7 @@
         <module>back-end-authorization-server</module>
         <module>back-end-resource-server</module>
         <module>back-end-spring-security-demo</module>
+        <module>back-end-oauth2-client</module>
     </modules>
 
     <properties>
@@ -25,8 +26,6 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <spring-boot.version>2.7.0</spring-boot.version>-->
-<!--        <spring-cloud.version>2021.0.3</spring-cloud.version>-->
         <spring-boot.version>3.0.5</spring-boot.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>

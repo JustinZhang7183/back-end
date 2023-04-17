@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -42,10 +44,10 @@ public class AuthorizationServerConfig {
   public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
     OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
     http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-        .authorizationServerSettings(authorizationServerSettings())
         .oidc(Customizer.withDefaults());
     http.exceptionHandling(e -> e
         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")));
+//            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt); // TODO: what is effected?
     corsCustomer.corsCustomizer(http);
     return http.build();
   }
@@ -60,11 +62,11 @@ public class AuthorizationServerConfig {
     RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
         .clientId("client")
         .clientSecret("secret")
-        .scope("read") // TODO: what difference between difference scope?
+        .scope(OidcScopes.OPENID) // TODO: what difference between difference scope?
         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-        .redirectUri("http://127.0.0.1:3000/authorized")// we can't use localhost, see OAuth2AuthorizationCodeRequestAuthenticationValidator
+        .redirectUri("http://127.0.0.1:8081/login/oauth2/code/myoauth2")// we can't use localhost, see OAuth2AuthorizationCodeRequestAuthenticationValidator
         .clientSettings(clientSettings())
         .tokenSettings(tokenSettings())
         .build();

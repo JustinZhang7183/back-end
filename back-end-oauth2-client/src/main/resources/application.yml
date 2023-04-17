@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          spring-provider:
+            issuer-uri: http://localhost:8000
+        registration:
+          myoauth2:
+            provider: spring-provider
+            client-id: client
+            client-secret: secret
+            scope: openid
+            authorization-grant-type: authorization_code
+            redirect-uri: http://127.0.0.1:8081/login/oauth2/code/myoauth2

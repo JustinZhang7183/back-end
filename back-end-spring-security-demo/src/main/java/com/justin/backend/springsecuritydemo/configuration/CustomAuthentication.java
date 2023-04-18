@@ -55,7 +55,7 @@ public class CustomAuthentication implements Authentication {
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-        throw new IllegalArgumentException("Don't do this"); // TODO: why?
+        throw new IllegalArgumentException("Don't do this");
     }
 
     @Override

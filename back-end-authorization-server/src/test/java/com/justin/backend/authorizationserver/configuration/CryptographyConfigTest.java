@@ -12,7 +12,7 @@ public class CryptographyConfigTest {
 
   @Test
   void test() {
-    String nacos = passwordEncoder.encode("nacos");
+    String nacos = passwordEncoder.encode("justin");
     System.out.println(nacos);
   }
 }

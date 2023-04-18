@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    username: root
+    password: ${mysql-password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${ip}:3306/oauth2_practice
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+    generate-ddl: true
+    show-sql: true

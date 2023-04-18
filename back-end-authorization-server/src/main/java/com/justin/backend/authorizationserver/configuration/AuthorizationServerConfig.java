@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -31,6 +32,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthorizationServerConfig {
   private final CORSCustomer corsCustomer;
+
+  private final PasswordEncoder passwordEncoder;
 
   /**
    * some default configuration. set the handler for exception.
@@ -59,7 +62,7 @@ public class AuthorizationServerConfig {
   public RegisteredClientRepository registeredClientRepository() {
     RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
         .clientId("client")
-        .clientSecret("secret")
+        .clientSecret(passwordEncoder.encode("secret"))
         .scope("read")
         .scope(OidcScopes.OPENID) // TODO: how to utilize the scope?
         .scope(OidcScopes.PROFILE)

@@ -105,7 +105,7 @@ public class AuthorizationServerConfig {
   public ClientSettings clientSettings() {
     return ClientSettings.builder()
         .requireAuthorizationConsent(false) // TODO: what is its usage?
-        .requireProofKey(false) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
+        .requireProofKey(true) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
         .build();
   }
 

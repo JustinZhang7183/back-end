@@ -30,6 +30,7 @@
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>
         <spring-security-oauth2-authorization-server.version>1.0.1</spring-security-oauth2-authorization-server.version>
+        <oauth2-oidc-sdk.version>9.43.1</oauth2-oidc-sdk.version>
         <spring-cloud-starter-alibaba-nacos-discovery.version>2022.0.0.0-RC1</spring-cloud-starter-alibaba-nacos-discovery.version>
     </properties>
 
@@ -53,6 +54,11 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-security-oauth2-authorization-server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>oauth2-oidc-sdk</artifactId>
+                <version>${oauth2-oidc-sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>

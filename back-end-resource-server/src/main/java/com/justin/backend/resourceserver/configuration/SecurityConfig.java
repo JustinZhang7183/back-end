@@ -18,15 +18,21 @@ public class SecurityConfig {
   @Autowired
   private CORSCustomer corsCustomer;
 
-  @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+  @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}")
   private String issuerUri;
+
+  @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-id}")
+  private String client;
+
+  @Value("${spring.security.oauth2.resourceserver.opaquetoken.client-secret}")
+  private String secret;
 
   @Bean
   public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
     corsCustomer.corsCustomizer(http);
     http.authorizeExchange(exchange -> exchange.anyExchange().authenticated())
-        .oauth2ResourceServer(customizer -> customizer
-            .jwt(jwtCustomizer -> jwtCustomizer.jwtDecoder(jwtDecoder())));
+        .oauth2ResourceServer(oauth2 -> oauth2.opaqueToken().introspectionUri(issuerUri)
+            .introspectionClientCredentials(client, secret));
     return http.build();
   }
 
@@ -42,7 +48,7 @@ public class SecurityConfig {
     return reactiveJwtAuthenticationConverter;
   }
 
-  @Bean
+//  @Bean
   public ReactiveJwtDecoder jwtDecoder() {
     return ReactiveJwtDecoders.fromIssuerLocation(issuerUri);
   }

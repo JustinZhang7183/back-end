@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
@@ -100,6 +101,7 @@ public class AuthorizationServerConfig {
   @Bean
   public TokenSettings tokenSettings() {
     return TokenSettings.builder()
+        .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
         .accessTokenTimeToLive(Duration.ofHours(1)) // TODO: should be the same?
         .refreshTokenTimeToLive(Duration.ofHours(1))
         .build();

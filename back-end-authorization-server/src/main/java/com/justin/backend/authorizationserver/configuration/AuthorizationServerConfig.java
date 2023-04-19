@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
@@ -73,6 +74,7 @@ public class AuthorizationServerConfig {
         .scope(OidcScopes.OPENID) // TODO: how to utilize the scope?
         .scope(OidcScopes.PROFILE)
         .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+        .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
         .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
         .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
         .redirectUri("http://127.0.0.1:8081/login/oauth2/code/myoauth2")// we can't use localhost, see OAuth2AuthorizationCodeRequestAuthenticationValidator
@@ -100,6 +102,7 @@ public class AuthorizationServerConfig {
   @Bean
   public TokenSettings tokenSettings() {
     return TokenSettings.builder()
+        .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
         .accessTokenTimeToLive(Duration.ofHours(1)) // TODO: should be the same?
         .refreshTokenTimeToLive(Duration.ofHours(1))
         .build();
@@ -114,7 +117,7 @@ public class AuthorizationServerConfig {
   public ClientSettings clientSettings() {
     return ClientSettings.builder()
         .requireAuthorizationConsent(false) // TODO: what is its usage?
-        .requireProofKey(true) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
+        .requireProofKey(false) // need PKCE mechanism. need code_challenge when authorized. need code_verifier when request token.
         .build();
   }
 

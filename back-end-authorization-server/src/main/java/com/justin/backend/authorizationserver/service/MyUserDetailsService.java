@@ -1,6 +1,6 @@
 package com.justin.backend.authorizationserver.service;
 
-import com.justin.backend.authorizationserver.model.CustomUsers;
+import com.justin.backend.authorizationserver.entities.CustomUsers;
 import com.justin.backend.authorizationserver.model.SecurityUser;
 import com.justin.backend.authorizationserver.repository.CustomUsersRepository;
 import lombok.AllArgsConstructor;

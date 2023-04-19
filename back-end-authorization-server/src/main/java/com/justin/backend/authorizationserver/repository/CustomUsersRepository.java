@@ -1,6 +1,6 @@
 package com.justin.backend.authorizationserver.repository;
 
-import com.justin.backend.authorizationserver.model.CustomUsers;
+import com.justin.backend.authorizationserver.entities.CustomUsers;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

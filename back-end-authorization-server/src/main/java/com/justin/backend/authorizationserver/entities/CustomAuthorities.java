@@ -1,4 +1,4 @@
-package com.justin.backend.authorizationserver.model;
+package com.justin.backend.authorizationserver.entities;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;

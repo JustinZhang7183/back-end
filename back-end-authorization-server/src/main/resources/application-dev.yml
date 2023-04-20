@@ -11,6 +11,12 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update
+      # create-drop, update, validate, none
+      ddl-auto: create
+    # validate, none, true
     generate-ddl: false
     show-sql: true
+  sql:
+    init:
+      data-locations: classpath:/oauth2-data-init/*.sql
+      mode: always

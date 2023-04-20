@@ -9,8 +9,9 @@ import lombok.NonNull;
 import java.time.LocalDate;
 import java.util.Set;
 
+import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
+
 @Data
-//@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -40,20 +41,20 @@ public class CustomUsers {
 
 //  @Singular
   @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-  @JoinTable(name = "custom_users_authorities", joinColumns = {
-      @JoinColumn(name = "users_id", referencedColumnName = "id")},inverseJoinColumns = {
-          @JoinColumn(name = "authorities_id", referencedColumnName = "id")})
-  private Set<CustomAuthorities> authorities;
+  @JoinTable(
+      name = "custom_users_authorities",
+      foreignKey = @ForeignKey(NO_CONSTRAINT),
+      inverseForeignKey = @ForeignKey(NO_CONSTRAINT),
+      joinColumns = {@JoinColumn(name = "custom_users_id", referencedColumnName = "id")},
+      inverseJoinColumns = {@JoinColumn(name = "custom_authorities_id", referencedColumnName = "id")}
+  )
+  private Set<CustomAuthorities> customAuthorities;
 
-//  @Builder.Default
   private Boolean accountNonExpired = true;
 
-//  @Builder.Default
   private Boolean accountNonLocked = true;
 
-//  @Builder.Default
   private Boolean credentialsNonExpired = true;
 
-//  @Builder.Default
   private Boolean enabled = true;
 }

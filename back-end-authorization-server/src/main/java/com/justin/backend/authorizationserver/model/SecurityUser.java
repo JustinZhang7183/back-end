@@ -1,7 +1,8 @@
 package com.justin.backend.authorizationserver.model;
 
 import com.justin.backend.authorizationserver.entities.CustomUsers;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+// TODO: if I use this object, there will be a issue of jackson. (allow list for deserialization; PersistentSet;)
+@NoArgsConstructor
+@AllArgsConstructor
 public class SecurityUser implements UserDetails {
-  private final CustomUsers user;
+  private CustomUsers user;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return user.getAuthorities().stream()
+
+    return user.getCustomAuthorities().stream()
         .map(auth -> new SimpleGrantedAuthority(auth.getAuthority()))
         .collect(Collectors.toSet());
   }

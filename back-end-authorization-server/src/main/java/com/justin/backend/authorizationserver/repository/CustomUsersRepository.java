@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface CustomUsersRepository extends JpaRepository<CustomUsers, Integer> {
   // if no this annotation, it will query twice to set authorities by the annotation in authorities filed in CustomUsers
   @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
-      attributePaths = {"authorities"})
+      attributePaths = {"customAuthorities"})
   Optional<CustomUsers> findByUsername(String username);
 }

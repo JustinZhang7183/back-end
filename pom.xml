@@ -17,6 +17,7 @@
         <module>back-end-resource-server</module>
         <module>back-end-spring-security-demo</module>
         <module>back-end-oauth2-client</module>
+        <module>back-end-zookeeper-demo</module>
     </modules>
 
     <properties>
@@ -31,10 +32,12 @@
         <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>
         <spring-security-oauth2-authorization-server.version>1.0.1</spring-security-oauth2-authorization-server.version>
         <spring-cloud-starter-alibaba-nacos-discovery.version>2022.0.0.0-RC1</spring-cloud-starter-alibaba-nacos-discovery.version>
+        <curator-recipes.version>5.2.1</curator-recipes.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--spring boot dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -42,6 +45,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring cloud dependencies-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -49,21 +53,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring security-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-security-oauth2-authorization-server.version}</version>
             </dependency>
+            <!--nacos-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${spring-cloud-starter-alibaba-nacos-discovery.version}</version>
             </dependency>
+            <!--mysql-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-jave.version}</version>
             </dependency>
+            <!--zookeeper-->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator-recipes.version}</version>
+            </dependency>
+            <!--common-->
             <dependency>
                 <groupId>com.justin</groupId>
                 <artifactId>back-end-common</artifactId>

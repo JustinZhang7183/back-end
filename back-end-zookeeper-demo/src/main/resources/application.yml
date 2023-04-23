@@ -1,0 +1,5 @@
+spring:
+  application:
+    zookeeper-demo-server
+  profiles:
+    active: dev

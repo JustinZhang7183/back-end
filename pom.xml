@@ -17,6 +17,7 @@
         <module>back-end-resource-server</module>
         <module>back-end-spring-security-demo</module>
         <module>back-end-oauth2-client</module>
+        <module>back-end-spring-cloud-zookeeper</module>
     </modules>
 
     <properties>

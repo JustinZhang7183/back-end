@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: dev
+    include: local-common
+  application:
+    name: spring-cloud-zookeeper

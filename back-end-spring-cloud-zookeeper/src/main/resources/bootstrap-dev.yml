@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    zookeeper:
+      config:
+        root: config
+        profile-separator: "-"
+        enabled: true
+      connect-string: ${zookeeper-url}:2181

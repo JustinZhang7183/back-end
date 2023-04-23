@@ -35,3 +35,4 @@ build/
 ### local config ###
 /**/application-local.yml
 /**/application-local-common.yml
+/back-end-common/src/main/resources/bootstrap-local-common.yml

@@ -18,24 +18,31 @@
         <module>back-end-spring-security-demo</module>
         <module>back-end-oauth2-client</module>
         <module>back-end-spring-cloud-zookeeper</module>
+        <module>back-end-zookeeper-demo</module>
     </modules>
 
     <properties>
         <back-end-tool.version>0.1.0</back-end-tool.version>
         <back-end-common.version>0.1.0</back-end-common.version>
         <back-end-practice.version>0.1.0</back-end-practice.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--        <maven.compiler.source>8</maven.compiler.source>-->
+<!--        <maven.compiler.target>8</maven.compiler.target>-->
+<!--        <spring-boot.version>2.7.11</spring-boot.version>-->
+<!--        <spring-cloud.version>2021.0.6</spring-cloud.version>-->
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
         <spring-boot.version>3.0.5</spring-boot.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>
         <spring-security-oauth2-authorization-server.version>1.0.1</spring-security-oauth2-authorization-server.version>
         <spring-cloud-starter-alibaba-nacos-discovery.version>2022.0.0.0-RC1</spring-cloud-starter-alibaba-nacos-discovery.version>
+        <curator-recipes.version>5.2.1</curator-recipes.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--spring boot dependencies-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -43,6 +50,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring cloud dependencies-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -50,21 +58,31 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring security-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-security-oauth2-authorization-server.version}</version>
             </dependency>
+            <!--nacos-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
                 <version>${spring-cloud-starter-alibaba-nacos-discovery.version}</version>
             </dependency>
+            <!--mysql-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-jave.version}</version>
             </dependency>
+            <!--zookeeper-->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator-recipes.version}</version>
+            </dependency>
+            <!--common-->
             <dependency>
                 <groupId>com.justin</groupId>
                 <artifactId>back-end-common</artifactId>
@@ -83,17 +101,4 @@
             <artifactId>back-end-common</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

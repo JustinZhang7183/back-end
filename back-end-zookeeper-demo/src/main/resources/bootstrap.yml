@@ -1,0 +1,9 @@
+server:
+  port: 8085
+  ip: localhost
+spring:
+  application:
+    name: zookeeper-demo-server
+  profiles:
+    active: dev
+    include: local-common

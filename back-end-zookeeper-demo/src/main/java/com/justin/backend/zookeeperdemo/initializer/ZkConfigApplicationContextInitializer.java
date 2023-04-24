@@ -21,7 +21,7 @@ public class ZkConfigApplicationContextInitializer implements ApplicationContext
     // connect zookeeper
     ConfigurableEnvironment environment = context.getEnvironment();
     String url = environment.getProperty("zookeeper-url");
-    String path = environment.getProperty("config-key");
+    String path = environment.getProperty("configs-path");
     log.info("initializing...");
     CuratorFramework curatorFramework = CuratorFrameworkFactory
         .builder()

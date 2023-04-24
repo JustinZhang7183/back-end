@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class JustinRefreshScopeBeanPostProcessor implements BeanPostProcessor {
+public class ZkRefreshScopeBeanPostProcessor implements BeanPostProcessor {
   private static final String REMOTE_ENV = "remote-env";
 
   private Map<String, FieldDetail> fieldDetailMap = new HashMap<>();
@@ -53,7 +53,7 @@ public class JustinRefreshScopeBeanPostProcessor implements BeanPostProcessor {
       // connect zookeeper
       ConfigurableEnvironment environment = context.getEnvironment();
       String url = environment.getProperty("zookeeper-url");
-      String path = environment.getProperty("config-key");
+      String path = environment.getProperty("configs-path");
       log.info("initializing...");
       CuratorFramework curatorFramework = CuratorFrameworkFactory
           .builder()
@@ -74,7 +74,7 @@ public class JustinRefreshScopeBeanPostProcessor implements BeanPostProcessor {
               Map<String, Object> updateMap = new ObjectMapper().readValue(new String(newData.getData()), Map.class);
               environment.getPropertySources().replace(REMOTE_ENV, new MapPropertySource(REMOTE_ENV, updateMap));
               // update value modified by value annotation
-              JustinRefreshScopeBeanPostProcessor processor = context.getBean("justinRefreshScopeBeanPostProcessor", JustinRefreshScopeBeanPostProcessor.class);
+              ZkRefreshScopeBeanPostProcessor processor = context.getBean("zkRefreshScopeBeanPostProcessor", ZkRefreshScopeBeanPostProcessor.class);
               Map<String, FieldDetail> fieldDetailMap = processor.getFieldDetailMap();
               for (String key : fieldDetailMap.keySet()) {
                 if(updateMap.containsKey(key)){

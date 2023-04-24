@@ -1,2 +1,4 @@
 org.springframework.context.ApplicationContextInitializer=\
   com.justin.backend.zookeeperdemo.initializer.ZkConfigApplicationContextInitializer
+org.springframework.context.ApplicationListener=\
+  com.justin.backend.zookeeperdemo.listener.ZkApplicationListener

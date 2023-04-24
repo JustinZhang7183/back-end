@@ -1,7 +1,3 @@
-server:
-  port: 8083
 spring:
-  application:
-    name: spring-cloud-zookeeper
   profiles:
     active: dev

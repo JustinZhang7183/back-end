@@ -6,3 +6,6 @@ spring:
         profile-separator: "-"
         enabled: true
       connect-string: ${zookeeper-url}:2181
+      discovery:
+        root: /services
+        instance-host: 192.168.1.100

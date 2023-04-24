@@ -1,11 +1,12 @@
 package com.justin.backend.zookeeperdemo.controller;
 
 import com.justin.backend.zookeeperdemo.annotation.JustinRefreshScope;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/demo")

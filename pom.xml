@@ -24,9 +24,13 @@
         <back-end-tool.version>0.1.0</back-end-tool.version>
         <back-end-common.version>0.1.0</back-end-common.version>
         <back-end-practice.version>0.1.0</back-end-practice.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--        <maven.compiler.source>8</maven.compiler.source>-->
+<!--        <maven.compiler.target>8</maven.compiler.target>-->
+<!--        <spring-boot.version>2.7.11</spring-boot.version>-->
+<!--        <spring-cloud.version>2021.0.6</spring-cloud.version>-->
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
         <spring-boot.version>3.0.5</spring-boot.version>
         <spring-cloud.version>2022.0.2</spring-cloud.version>
         <mysql-connector-jave.version>8.0.29</mysql-connector-jave.version>
@@ -96,17 +100,4 @@
             <artifactId>back-end-common</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
